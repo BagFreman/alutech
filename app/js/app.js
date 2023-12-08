@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
    const sliderTeam = new Swiper('.team', {
       spaceBetween: 20,
       slidesPerView: 'auto',
+      initialSlide: 1,
 
       navigation: {
          nextEl: '.swiper-button-next-1',
@@ -57,12 +58,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
    // Маска для телефона
 
-   const phone = document.querySelector('.phone');
+   const phones = document.querySelectorAll('.phone');
    const maskOptions = {
       mask: '+{7}(000)000-00-00'
    };
 
-   let mask = IMask(phone, maskOptions);
+   for (let phone of phones) {
+      let mask = IMask(phone, maskOptions);
+   }
 
 
    /**
@@ -144,7 +147,9 @@ $(document).ready(function () {
       $(this).addClass('calc-top-item__active');
 
       let dataImg = $(this).data('img');
+      let dataColor = $(this).data('color');
       $('.calc-middle__img-img').attr('src', 'img/calc/' + dataImg);
+      $('.calc-middle__bgc').attr('style', 'background-color:' + dataColor);
    });
 
    $('.calc-colors__color').on('click', function () {
@@ -165,8 +170,156 @@ $(document).ready(function () {
       }).eq(0).addClass('active');
    });
 
+   $('.calc').each(function () {
+      let ths = $(this);
+      ths.find('.calc-item').not(':first').hide();
+      ths.find('.calc-bottom-item').click(function () {
+         ths.find('.calc-bottom-item').removeClass('active').eq($(this).index()).addClass('active');
+         ths.find('.calc-item').hide().eq($(this).index()).fadeIn()
+      }).eq(0).addClass('active');
+   });
+
    $('.calc-bottom-item').on('click', function () {
       $(this).parent().find('.calc-bottom-item-active').removeClass('calc-bottom-item-active');
       $(this).addClass('calc-bottom-item-active');
    });
+
+   if (window.innerWidth > 992) {
+
+      gsap.to(".s-sub-title__icon", {
+         y: '120px',
+         transition: "linear",
+         scrollTrigger: {
+            trigger: ".s-2",
+            start: "top 40%",
+            end: "bottom 100%",
+            scrub: 2,
+         }
+      })
+
+      gsap.to(".s-2__content-text", {
+         x: '0',
+         transition: "linear",
+         scrollTrigger: {
+            trigger: ".s-2",
+            start: "top 40%",
+            end: "bottom 100%",
+            scrub: 2,
+         }
+      })
+
+      gsap.to(".s-4-item__img", {
+         x: '0',
+         transition: "linear",
+         scrollTrigger: {
+            trigger: ".s-4",
+            start: "top 40%",
+            end: "bottom 100%",
+            scrub: 2,
+         }
+      })
+
+      gsap.to(".s-5-bottom-img", {
+         x: '0',
+         transition: "linear",
+         scrollTrigger: {
+            trigger: ".s-5",
+            start: "top 40%",
+            end: "bottom 100%",
+            scrub: 2,
+         }
+      })
+
+      gsap.to(".s-6__text", {
+         y: '0',
+         transition: "linear",
+         scrollTrigger: {
+            trigger: ".s-6",
+            start: "top 40%",
+            end: "bottom 100%",
+            scrub: 2,
+         }
+      })
+
+      gsap.to(".s-6__img-img", {
+         x: '0',
+         transition: "linear",
+         scrollTrigger: {
+            trigger: ".s-6",
+            start: "top 40%",
+            end: "bottom 100%",
+            scrub: 2,
+         }
+      })
+
+      gsap.to(".s-6__left", {
+         y: '200',
+         transition: "linear",
+         scrollTrigger: {
+            trigger: ".s-6",
+            start: "top 40%",
+            end: "bottom 100%",
+            scrub: 2,
+         }
+      })
+
+      gsap.to(".s-13__offer-img", {
+         scale: 1,
+         transition: "linear",
+         scrollTrigger: {
+            trigger: ".s-13",
+            start: "top 40%",
+            end: "bottom 100%",
+            scrub: 2,
+         }
+      })
+
+   }
+
+   let myModal = document.querySelector('#exampleModal');
+
+   myModal.addEventListener('hidden.bs.modal', function () {
+      $('.modal').find('.modal-body').css('display', 'block');
+      $('.modal').find('.modal-body-success').css('display', 'none');
+   })
+
+   $('#modal-form').submit(function () { //Change
+      var th = $(this);
+      $.ajax({
+         type: "POST",
+         url: "mail.php", //Change
+         data: th.serialize()
+      }).done(function () {
+         setTimeout(function () {
+            $('.modal').find('.modal-body').css('display', 'none');
+            $('.modal').find('.modal-body-success').css('display', 'block');
+            th.trigger("reset");
+         }, 1000);
+      });
+      return false;
+   });
+
+   let myModal2 = new bootstrap.Modal(document.querySelector('#exampleModal'));
+
+   $('#middle-form').submit(function () { //Change
+      var th = $(this);
+      $.ajax({
+         type: "POST",
+         url: "mail.php", //Change
+         data: th.serialize()
+      }).done(function () {
+         setTimeout(function () {
+            myModal2.show();
+            $('.modal').find('.modal-body').css('display', 'none');
+            $('.modal').find('.modal-body-success').css('display', 'block');
+            th.trigger("reset");
+         }, 1000);
+      });
+      return false;
+   });
+
+
+
+
 });
+
