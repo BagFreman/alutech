@@ -15,13 +15,13 @@ $comment = $_POST['comment'];
 $mail->isSMTP();
 $mail->Host = 'smtp.yandex.ru';                                                                                            // Specify main and backup SMTP servers
 $mail->SMTPAuth = true;
-$mail->Username = '';
-$mail->Password = '';
+$mail->Username = 'ooo.mardi@yandex.ru';
+$mail->Password = 'phxtfohvuandspfc';
 $mail->SMTPSecure = 'ssl';
 $mail->Port = 465;
 
-$mail->setFrom('');
-$mail->addAddress('');
+$mail->setFrom('ooo.mardi@yandex.ru');
+$mail->addAddress('Mardi777@bk.ru');
 // $mail->addAddress('');              
 //$mail->addReplyTo('info@example.com', 'Information');
 //$mail->addCC('cc@example.com');
